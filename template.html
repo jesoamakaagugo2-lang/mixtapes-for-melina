@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mixtapes for Melina</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#170a2c;--bg2:#4a0d4f;--rose:#ff7eb6;--mag:#e052f0;--vio:#8b5cf6;--text:#fff0f7;--muted:#dcb8d6;--glass:rgba(255,255,255,.08);--line:rgba(255,255,255,.2);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--text);font-family:'Cormorant Garamond',Georgia,serif;font-size:19px;background:radial-gradient(circle at 15% 10%,rgba(224,82,240,.35),transparent 45%),radial-gradient(circle at 85% 90%,rgba(139,92,246,.4),transparent 50%),linear-gradient(160deg,var(--bg1),var(--bg2));background-attachment:fixed;overflow-x:hidden}
+.p{position:fixed;bottom:-20px;border-radius:50%;background:radial-gradient(circle,#fff,var(--rose) 40%,transparent 70%);opacity:0;animation:up linear infinite;pointer-events:none}
+@keyframes up{0%{transform:translateY(0) translateX(0);opacity:0}15%{opacity:.8}100%{transform:translateY(-110vh) translateX(30px);opacity:0}}
+main{position:relative;max-width:900px;margin:0 auto;padding:48px 20px 64px}
+h1{font-family:'Dancing Script',cursive,serif;font-size:clamp(2.6rem,9vw,4.4rem);margin:0;text-align:center;background:linear-gradient(90deg,var(--rose),var(--mag),var(--vio));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(255,126,182,.5))}
+.sub{text-align:center;color:var(--muted);font-style:italic;margin:6px 0 36px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{all:unset;box-sizing:border-box;cursor:pointer;display:block;padding:26px 22px;border-radius:22px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 32px rgba(224,82,240,.18);transition:transform .3s,box-shadow .3s}
+.card:hover,.card:focus-visible{transform:translateY(-6px);box-shadow:0 12px 40px rgba(255,126,182,.4)}
+.card .n{font-size:1.9rem;color:var(--rose)}
+.card h2{font-size:1.45rem;line-height:1.25;margin:8px 0 10px;font-weight:600}
+.card .m{color:var(--muted);font-style:italic;font-size:.95rem}
+.back{all:unset;cursor:pointer;color:var(--rose);margin-bottom:18px;display:inline-block}
+.back:hover{text-decoration:underline}
+.panel{padding:30px 24px;border-radius:26px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 10px 40px rgba(139,92,246,.3)}
+.panel h2{font-family:'Dancing Script',cursive,serif;font-size:clamp(2rem,7vw,3rem);margin:0 0 18px;text-align:center}
+.open{display:block;width:fit-content;margin:0 auto 26px;padding:14px 30px;border-radius:999px;color:#fff;text-decoration:none;font-weight:600;letter-spacing:.03em;background:linear-gradient(90deg,var(--rose),var(--mag),var(--vio));box-shadow:0 0 24px rgba(224,82,240,.6);transition:transform .25s,box-shadow .25s}
+.open:hover{transform:scale(1.06);box-shadow:0 0 38px rgba(255,126,182,.85)}
+ol{list-style:none;margin:0;padding:0;counter-reset:t}
+li{counter-increment:t}
+li a{display:flex;gap:14px;align-items:baseline;padding:13px 12px;border-radius:14px;color:var(--text);text-decoration:none;transition:background .2s}
+li a::before{content:counter(t);color:var(--rose);min-width:1.4em;text-align:right}
+li a:hover,li a:focus-visible{background:rgba(255,126,182,.15)}
+li b{font-weight:600}
+li i{display:block;color:var(--muted);font-size:.9rem}
+[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){.p{display:none}}
+</style>
+</head>
+<body>
+<main>
+<h1>Mixtapes for Melina</h1>
+<p class="sub">songs I couldn’t say out loud, so I made you playlists ✨</p>
+<section id="home"><div class="grid" id="grid"></div></section>
+<section id="detail" hidden>
+<button class="back" id="back">← all mixtapes</button>
+<div class="panel"><h2 id="dt"></h2><a class="open" id="dl" target="_blank" rel="noopener">Open in YouTube Music ♡</a><ol id="tl"></ol></div>
+</section>
+</main>
+<script>
+var B="https://music.youtube.com/";
+var P=__PLAYLISTS__;
+var $=function(i){return document.getElementById(i)};
+var g=$("grid");
+P.forEach(function(p,i){
+var b=document.createElement("button");b.className="card";
+b.innerHTML='<div class="n">♡</div><h2></h2><div class="m">'+p.t.length+' songs</div>';
+b.querySelector("h2").textContent=p.n;
+b.onclick=function(){show(i)};g.appendChild(b);
+});
+function show(i){
+var p=P[i];
+$("dt").textContent=p.n;
+$("dl").href=B+"playlist?list="+p.id;
+var o=$("tl");o.innerHTML="";
+p.t.forEach(function(s){
+var li=document.createElement("li"),a=document.createElement("a");
+a.href=B+"watch?v="+s[2]+"&list="+p.id;a.target="_blank";a.rel="noopener";
+var b=document.createElement("b");b.textContent=s[0];
+var m=document.createElement("i");m.textContent=s[1];
+var d=document.createElement("span");d.append(b,m);a.appendChild(d);li.appendChild(a);o.appendChild(li);
+});
+$("home").hidden=true;$("detail").hidden=false;window.scrollTo(0,0);
+}
+$("back").onclick=function(){$("detail").hidden=true;$("home").hidden=false;window.scrollTo(0,0)};
+for(var k=0;k<26;k++){
+var e=document.createElement("span"),z=3+Math.random()*7;
+e.className="p";e.style.cssText="left:"+Math.random()*100+"%;width:"+z+"px;height:"+z+"px;animation-duration:"+(10+Math.random()*14)+"s;animation-delay:-"+Math.random()*20+"s";
+document.body.appendChild(e);
+}
+</script>
+<!--synced __DATE__-->
+</body>
+</html>
