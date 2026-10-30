@@ -1,7 +1,24 @@
 {
   "playlists": [
-    {"id": "PLV0WHxf8IK4I", "name": "The Beginning of the THIRD"},
-    {"id": "PLevCq27dQapQ", "name": "Mi amor por ti es más grande que un solo idioma."},
-    {"id": "PLR4wqObHdE98", "name": "The Bonnie to my Clyde"}
+    {
+      "id": "PLevCq27dQapQ",
+      "name": "Mi amor por ti es más grande que un solo idioma."
+    },
+    {
+      "id": "PLR4wqObHdE98",
+      "name": "The Bonnie to my Clyde"
+    },
+    {
+      "id": "PLcr7g8CX_XoU",
+      "name": "Good vibes for the week"
+    },
+    {
+      "id": "PLAxJeUShVV88",
+      "name": "The beginning of Something beautiful"
+    },
+    {
+      "id": "PLS1PJ5Sc3PZQ",
+      "name": "Ode to my love"
+    }
   ]
 }
